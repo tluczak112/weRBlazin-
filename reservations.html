@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- jquery -->
+    <title>Page Title</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery.js"></script>
+
+<style>
+    .navbar {
+        margin-bottom: 0;
+        border-radius: 0;
+        background-color: maroon;
+        color: #fff;
+        padding: 1% 0;
+        font-size: 1.2em;
+        border: 0;
+    }
+
+    .navbar-brand {
+        float: left;
+        min-height: 55px;
+        padding: 0 15px 5px;
+    }
+
+    .navbar-inverse .navbar-nav .active a,
+    .navbar-inverse .navbar-nav .active a:focus,
+    .navbar-inverse .navbar-nav .active a:hover {
+        color: #fff;
+        background-color: maroon;
+    }
+
+    .navbar-inverse .navbar-nav li a {
+        color: #d5d5d5;
+    }
+
+    .btn {
+        font-size: 18px;
+        color: white;
+        padding: 12px 22px;
+        background: maroon;
+        border: 2px solid white;
+    }
+
+    .container {
+        margin: 4% auto;
+    }
+
+    #icon {
+        max-width: 200px;
+        margin: 1% auto;
+    }
+
+    #icon {
+        max-width: 150px;
+    }
+
+    h2 {
+        font-size: 1.7em;
+    }
+</style>
+
+</head>
+<body>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">
+                    <span class="glyphicon glyphicon-th-large" </span>
+                </a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="active">
+                        <a href="#">Home</a>
+                    </li>
+                    <li class="active">
+                        <a href="#">About Us</a>
+                    </li>
+                    <li class="active">
+                        <a href="#">Services</a>
+                    </li>
+                    <li class="active">
+                        <a href="#">Waiting List</a>
+                    </li>
+                    <li class="active">
+                        <a href="#">Contact</a>
+                    </li>
+                </ul>
+    
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="jumbotron text-center">
+            <h1 class="text-center"><span class="glyphicon glyphicon-th-large"></span> We R Blazin' </h1>
+            <h3 class="display-3">Reservation and Waiting List</h3>
+             <a href="/"><button type="button" class="btn btn-default btn-lg">
+                    <span class="glyphicon glyphicon-home"></span>
+                </button>
+                </a>
+            <a href="/add">
+                <button type="button" class="btn btn-primary btn-lg">Make Reservation</button>
+            </a>
+    
+            <ion-icon name="home"></ion-icon>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+        
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Reservations Placed</h3>
+                    </div>
+                    <div class="panel-body" id="reservations">
+                    </div>
+                </div>
+        
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">The List of Waiting</h3>
+                    </div>
+                    <div class="panel-body" id="waitlist">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer class="footer">
+            <div class="container">
+                <p>Clear Down Below</p>
+                <p>
+                    <a href="#" id="clear">Clear Table</a>
+            </div>
+        </footer>
+        
+    
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $.get("api/reservations").then(function(data){
+                var waitlistcount = 0;
+                console.log(data);
+                data.forEach((reservation, index) => {
+                    if(index <5){
+                        var newr = $("<div>");
+                        //newr.text(JSON.stringify(reservation));
+                        newr.append($("<span>").text(index + " "));
+
+                        newr.append($("<span>").text(reservation.customerName));
+                        $("#reservations").append(newr);
+                    // newr.append($("<p>").text(reservation.phoneNumber));
+                    // newr.append($("<p>").text(reservation.customerEmail));
+                    // newr.append($("<p>").text(reservation.customerID));
+                    }
+                    else{
+                        var newr = $("<div>");
+                        //newr.text(JSON.stringify(reservation));
+                        newr.append($("<span>").text(waitlistcount + " "));
+
+                        newr.append($("<span>").text(reservation.customerName));
+                        $("#waitlist").append(newr);
+                        waitlistcount++;
+                    }
+                    
+
+
+                    
+                })
+            });
+        });
+    </script>
+</body>
+</html>
